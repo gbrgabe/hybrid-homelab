@@ -50,7 +50,7 @@ This document describes the installation and configuration of OPNsense as the fi
 
 | Interface | Bridge | Role | IP |
 |---|---|---|---|
-| vtnet0 | vmbr1 | LAN | 192.168.1.1/24 |
+| vtnet0 | vmbr1 | LAN | 192.168.30.1/24 |
 | vtnet1 | vmbr0 | WAN | 192.168.0.119/24 (DHCP) |
 
 ---
@@ -78,7 +78,7 @@ Before rebooting, I removed the ISO from the CD/DVD drive in Proxmox Hardware so
 After reboot, logged in as `root`. The console was already showing:
 
 ```
-LAN (vtnet0) → 192.168.1.1/24
+LAN (vtnet0) → 192.168.30.1/24
 WAN (vtnet1) → (blank)
 ```
 
