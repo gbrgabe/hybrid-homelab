@@ -77,13 +77,12 @@ Simulate a small company IT infrastructure where:
 | DC01 | 192.168.30.10 | Domain Controller |
 | SRV-MON | 192.168.30.20 | Monitoring |
 | SRV-APPS | 192.168.30.30 | Apps + AI Agents |
-
-DHCP Pool: 192.168.30.100 - 192.168.30.200
----
 | PC01 | 192.168.30.101 | Windows 11 client |
 | PC02 | 192.168.30.102 | Ubuntu Desktop client |
 | PC03 | 192.168.30.103 | Ubuntu Desktop client |
 | PC04 | 192.168.30.104 | Ubuntu Desktop client |
+
+DHCP Pool: 192.168.30.100 - 192.168.30.200
 
 ---
 
