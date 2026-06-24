@@ -11,7 +11,7 @@ This document describes the installation and configuration of OPNsense as the fi
 | Component | Details |
 |---|---|
 | Hypervisor | Proxmox VE 9.1.11 |
-| OPNsense Version | 26.1.6 (amd64) |
+| OPNsense Version | 26.1.10 (amd64) |
 | Node | office |
 | VM ID | 100 |
 
