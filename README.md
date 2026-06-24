@@ -6,9 +6,9 @@ A hybrid homelab simulating a real corporate environment, running across two phy
 ## Objective
 
 Simulate a small company IT infrastructure where:
-- **AI agents** perform daily tasks as employees (login, tickets, navigation)
-- **Chaos Monkey** sabotages the environment in controlled ways
-- Real troubleshooting scenarios are generated, diagnosed and documented
+- **AI agents** perform daily tasks as employees (login, tickets, navigation).
+- **Chaos Monkey** sabotages the environment in controlled ways.
+- Generated real troubleshooting scenarios, diagnosed and documented.
 
 ---
 
