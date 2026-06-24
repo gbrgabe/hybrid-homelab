@@ -79,7 +79,7 @@ Simulate a small company IT infrastructure where:
 | SRV-APPS | 192.168.30.30 | Apps + AI Agents |
 
 DHCP Pool: 192.168.30.100 - 192.168.30.200
-
+---
 | PC01 | 192.168.30.101 | Windows 11 client |
 | PC02 | 192.168.30.102 | Ubuntu Desktop client |
 | PC03 | 192.168.30.103 | Ubuntu Desktop client |
