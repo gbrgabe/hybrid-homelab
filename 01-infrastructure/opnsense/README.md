@@ -50,7 +50,7 @@ This document describes the installation and configuration of OPNsense as the fi
 
 | Interface | Bridge | Role | IP |
 |---|---|---|---|
-| vtnet0 | vmbr1 | LAN | 192.168.30.1/24 |
+| vtnet0 | vmbr1 | LAN | 10.0.0.1/24 |
 | vtnet1 | vmbr0 | WAN | 192.168.0.119/24 (DHCP) |
 
 ---
@@ -63,7 +63,7 @@ Before even creating the VM, I needed a second Linux Bridge for the LAN side. By
 
 ### 2. VM Creation
 
-Created the VM through the Proxmox GUI with the OPNsense 26.1.6 ISO attached. One thing to pay attention to: OPNsense needs **two NICs** — one for WAN and one for LAN. I added the first NIC (`vmbr0`) during VM creation, then added the second (`vmbr1`) in Hardware before booting for the first time.
+Created the VM through the Proxmox GUI with the OPNsense ISO attached. One thing to pay attention to: OPNsense needs **two NICs** — one for WAN and one for LAN. I added the first NIC (`vmbr0`) during VM creation, then added the second (`vmbr1`) in Hardware before booting for the first time.
 
 > Important: do NOT start the VM before adding the second NIC, otherwise you'll have to assign interfaces manually from the console anyway.
 
@@ -78,7 +78,7 @@ Before rebooting, I removed the ISO from the CD/DVD drive in Proxmox Hardware so
 After reboot, logged in as `root`. The console was already showing:
 
 ```
-LAN (vtnet0) → 192.168.30.1/24
+LAN (vtnet0) → 10.0.0.1/24
 WAN (vtnet1) → (blank)
 ```
 
@@ -105,11 +105,11 @@ The fix was to go into the VM **Hardware** in Proxmox and swap the bridges:
 - **net0** → `vmbr1` (LAN — internal bridge)
 - **net1** → `vmbr0` (WAN — physical NIC with internet)
 
-After that, rebooted and WAN immediately picked up `192.168.0.118/24` via DHCP.
+After that, rebooted and WAN immediately picked up an IP address via DHCP.
 
 ### 6. Accessing the WebGUI — Second Problem
 
-Tried to access `https://192.168.0.118` from my PC and it just kept loading. Turns out OPNsense blocks WebGUI access from the WAN interface by default, which makes total sense security-wise but caught me off guard.
+Tried to access the WebGUI from my PC and it just kept loading. Turns out OPNsense blocks WebGUI access from the WAN interface by default, which makes total sense security-wise but caught me off guard.
 
 The fix was to go back to the console, select **Option 8) Shell** and run:
 
@@ -128,7 +128,7 @@ Went through the initial configuration wizard:
 - **Language:** English
 - **Timezone:** America/Sao_Paulo
 - **DNS:** left blank while DC is not online 
-- **LAN:** 192.168.30.1/24
+- **LAN:** 10.0.0.1/24
 - **DHCP Server:** Enabled on LAN
 - **Block RFC1918:** Enabled
 - **Block Bogon Networks:** Enabled
@@ -149,10 +149,11 @@ Updated OPNsense via **System → Firmware → Updates**. (had to run couples pf
 
 ## Next Steps
 
-- [ ] Provision DC (Windows Server Core) VM on Proxmox
-- [ ] Configure AD DS, DNS and DHCP on the DC
+- [x] Provision DC (Windows Server Core) VM on Proxmox
+- [x] Configure AD DS and DNS on the DC
+- [ ] Configure DHCP on the DC
 - [ ] Update OPNsense DNS to point to the DC
-- [ ] Configure static DHCP leases for lab VMs
+- [ ] Configure static DHCP reservations for lab VMs
 - [ ] Document full network topology in Cisco Packet Tracer
 
 ---
