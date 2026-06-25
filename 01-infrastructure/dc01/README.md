@@ -108,7 +108,7 @@ During the initial deployment, the Domain Controller had temporary Internet acce
 
 After the initial configuration was completed, the temporary network interface was removed and the default route was configured to use the OPNsense LAN interface (`10.0.0.1`).
 
-Configure the default gateway to use OPNsense:
+Configure the default route to use OPNsense:
 
 ```powershell
 New-NetRoute -DestinationPrefix "0.0.0.0/0" -InterfaceAlias "Ethernet" -NextHop 10.0.0.1
