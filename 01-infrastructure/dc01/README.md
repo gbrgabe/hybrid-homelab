@@ -62,7 +62,7 @@ Get-NetAdapter
 ## 4. Static IP and DNS
 
 ```powershell
-New-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 10.0.0.10 -PrefixLength 24
+New-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 10.0.0.10 -PrefixLength 24 -DefaultGateway 10.0.0.1
 
 Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses 10.0.0.10
 ```
@@ -102,7 +102,29 @@ nslookup 10.0.0.10
 
 ---
 
-## 6. Storage Migration — SATA to VirtIO SCSI
+---
+
+## 6. Default Gateway
+
+During the initial deployment, the Domain Controller had temporary Internet access through a secondary network interface connected directly to the home network.
+
+After the initial configuration was completed, the temporary network interface was removed and the default route was configured to use the OPNsense LAN interface (`10.0.0.1`).
+
+Configure the default gateway to use OPNsense:
+
+```powershell
+New-NetRoute -DestinationPrefix "0.0.0.0/0" -InterfaceAlias "Ethernet" -NextHop 10.0.0.1
+```
+
+Verify:
+
+```powershell
+route print
+ipconfig /all
+```
+---
+
+## 7. Storage Migration — SATA to VirtIO SCSI
 
 With AD DS operational, the boot disk was migrated from SATA to VirtIO SCSI.
 
