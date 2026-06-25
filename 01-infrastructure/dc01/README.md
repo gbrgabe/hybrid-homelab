@@ -128,4 +128,15 @@ Verify:
 Get-Disk
 ```
 
+Current Status
+
+✔ Active Directory
+✔ DNS
+✔ Domain Controller
+✔ Static IP
+✔ VirtIO Network
+✔ VirtIO SCSI
+□ DHCP (coming next)
+□ Domain Clients
+
 
