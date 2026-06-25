@@ -1,6 +1,6 @@
 # Hybrid Homelab + AI Agents
 
-A hybrid homelab simulating a real corporate environment, running across two physical machines with AI agents acting as employees. 
+A hybrid homelab simulating a real corporate environment, running across two physical machines with AI agents simulating employees. 
 ---
 
 ## Objective
