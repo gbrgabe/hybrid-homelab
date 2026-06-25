@@ -62,7 +62,7 @@ Get-NetAdapter
 ## 4. Static IP and DNS
 
 ```powershell
-New-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 10.0.0.10 -PrefixLength 24 -DefaultGateway 10.0.0.1
+New-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 10.0.0.10 -PrefixLength 24 
 
 Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses 10.0.0.10
 ```
@@ -102,8 +102,6 @@ nslookup 10.0.0.10
 
 ---
 
----
-
 ## 6. Default Gateway
 
 During the initial deployment, the Domain Controller had temporary Internet access through a secondary network interface connected directly to the home network.
@@ -128,7 +126,7 @@ ipconfig /all
 
 With AD DS operational, the boot disk was migrated from SATA to VirtIO SCSI.
 
-### 6.1 Install VirtIO SCSI Driver
+### 7.1 Install VirtIO SCSI Driver
 
 With `virtio-win.iso` still attached:
 
@@ -136,11 +134,11 @@ With `virtio-win.iso` still attached:
 pnputil /add-driver E:\vioscsi\2k22\amd64\vioscsi.inf /install
 ```
 
-### 6.2 Add a Temporary VirtIO SCSI Disk
+### 7.2 Add a Temporary VirtIO SCSI Disk
 
 Shut down the VM and add a new empty disk using the VirtIO SCSI controller. Keep the original SATA disk attached. Boot the VM — Windows will detect and load the VirtIO SCSI controller automatically.
 
-### 6.3 Replace the SATA Disk
+### 7.3 Replace the SATA Disk
 
 Shut down the VM, remove the SATA disk, and reattach it as a VirtIO SCSI device. Start the VM.
 
@@ -150,15 +148,16 @@ Verify:
 Get-Disk
 ```
 
-Current Status
+## Current Status
 
-✔ Active Directory
-✔ DNS
-✔ Domain Controller
-✔ Static IP
-✔ VirtIO Network
-✔ VirtIO SCSI
-□ DHCP (coming next)
-□ Domain Clients
+- [x] Active Directory
+- [x] DNS
+- [x] Domain Controller
+- [x] Static IP
+- [x] Default Gateway (OPNsense)
+- [x] VirtIO Network
+- [x] VirtIO SCSI
+- [ ] DHCP (coming next)
+- [ ] Domain Clients
 
 
