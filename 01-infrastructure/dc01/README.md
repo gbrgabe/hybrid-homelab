@@ -147,6 +147,63 @@ Verify:
 ```powershell
 Get-Disk
 ```
+---
+
+## 8. DHCP Server
+
+Install the DHCP Server role:
+
+```powershell
+Install-WindowsFeature DHCP -IncludeManagementTools
+```
+
+### Create the DHCP Scope
+
+```powershell
+Add-DhcpServerv4Scope -Name "office.lab" -StartRange 10.0.0.150 -EndRange 10.0.0.200 -SubnetMask 255.255.255.0
+```
+
+### Configure Scope Options
+
+```powershell
+Set-DhcpServerv4OptionValue -ScopeId 10.0.0.0 -Router 10.0.0.1 -DnsServer 10.0.0.10 -DnsDomain "office.lab"
+```
+
+Verify:
+
+```powershell
+Get-DhcpServerv4OptionValue -ScopeId 10.0.0.0
+```
+
+### Authorize DHCP in Active Directory
+
+```powershell
+Add-DhcpServerInDC -DnsName "DC01.office.lab" -IPAddress 10.0.0.10
+```
+
+Verify:
+
+```powershell
+Get-DhcpServerInDC
+```
+
+### Configure DHCP Reservations
+
+```powershell
+Add-DhcpServerv4Reservation -ScopeId 10.0.0.0 -IPAddress 10.0.0.101 -ClientId "00-0C-29-5F-C6-0C" -Name "PC01"
+
+Add-DhcpServerv4Reservation -ScopeId 10.0.0.0 -IPAddress 10.0.0.102 -ClientId "00-0C-29-CE-26-93" -Name "PC02"
+
+Add-DhcpServerv4Reservation -ScopeId 10.0.0.0 -IPAddress 10.0.0.103 -ClientId "00-0C-29-73-01-F6" -Name "PC03"
+
+Add-DhcpServerv4Reservation -ScopeId 10.0.0.0 -IPAddress 10.0.0.104 -ClientId "00-0C-29-17-51-99" -Name "PC04"
+```
+
+Verify:
+
+```powershell
+Get-DhcpServerv4Reservation -ScopeId 10.0.0.0
+```
 
 ## Current Status
 
@@ -157,7 +214,12 @@ Get-Disk
 - [x] Default Gateway (OPNsense)
 - [x] VirtIO Network
 - [x] VirtIO SCSI
-- [ ] DHCP (coming next)
-- [ ] Domain Clients
+- [x] DHCP Server
+- [x] DHCP Scope
+- [x] DHCP Reservations
+- [x] DHCP Authorized in Active Directory
+- [x] OPNsense DHCP Disabled
+- [ ] Domain Clients (waiting on Microsoft Cloud infrastructure)
+- [ ] DHCP Validation (waiting on Microsoft Cloud infrastructure)
 
 
