@@ -166,13 +166,13 @@ Add-DhcpServerv4Scope -Name "inthelli.lab" -StartRange 10.0.0.150 -EndRange 10.0
 ### Configure Scope Options
 
 ```powershell
-Set-DhcpServerv4OptionValue -ScopeId 10.0.0.10 -Router 10.0.0.1 -DnsServer 10.0.0.10 -DnsDomain "inthelli.lab"
+Set-DhcpServerv4OptionValue -ScopeId 10.0.0.0 -Router 10.0.0.1 -DnsServer 10.0.0.10 -DnsDomain "inthelli.lab"
 ```
 
 Verify:
 
 ```powershell
-Get-DhcpServerv4OptionValue -ScopeId 10.0.0.10
+Get-DhcpServerv4OptionValue -ScopeId 10.0.0.0
 ```
 
 ### Authorize DHCP in Active Directory
@@ -190,19 +190,19 @@ Get-DhcpServerInDC
 ### Configure DHCP Reservations
 
 ```powershell
-Add-DhcpServerv4Reservation -ScopeId 10.0.0.10 -IPAddress 10.0.0.101 -ClientId "00-0C-29-5F-C6-0C" -Name "PC01"
+Add-DhcpServerv4Reservation -ScopeId 10.0.0.0 -IPAddress 10.0.0.101 -ClientId "00-0C-29-5F-C6-0C" -Name "PC01"
 
-Add-DhcpServerv4Reservation -ScopeId 10.0.0.10 -IPAddress 10.0.0.102 -ClientId "00-0C-29-CE-26-93" -Name "PC02"
+Add-DhcpServerv4Reservation -ScopeId 10.0.0.0 -IPAddress 10.0.0.102 -ClientId "00-0C-29-CE-26-93" -Name "PC02"
 
-Add-DhcpServerv4Reservation -ScopeId 10.0.0.10 -IPAddress 10.0.0.103 -ClientId "00-0C-29-73-01-F6" -Name "PC03"
+Add-DhcpServerv4Reservation -ScopeId 10.0.0.0 -IPAddress 10.0.0.103 -ClientId "00-0C-29-73-01-F6" -Name "PC03"
 
-Add-DhcpServerv4Reservation -ScopeId 10.0.0.10 -IPAddress 10.0.0.104 -ClientId "00-0C-29-17-51-99" -Name "PC04"
+Add-DhcpServerv4Reservation -ScopeId 10.0.0.0 -IPAddress 10.0.0.104 -ClientId "00-0C-29-17-51-99" -Name "PC04"
 ```
 
 Verify:
 
 ```powershell
-Get-DhcpServerv4Reservation -ScopeId 10.0.0.10
+Get-DhcpServerv4Reservation -ScopeId 10.0.0.0
 ```
 
 ## Current Status
