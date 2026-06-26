@@ -1,6 +1,6 @@
 # DC01 — Domain Controller
 
-Windows Server 2022 Core — AD DS, DNS, DHCP — domain `office.lab`
+Windows Server 2022 Core — AD DS, DNS, DHCP — domain `inthelli.lab`
 
 ---
 
@@ -62,9 +62,9 @@ Get-NetAdapter
 ## 4. Static IP and DNS
 
 ```powershell
-New-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 10.0.0.10 -PrefixLength 24 
+New-NetIPAddress -InterfaceAlias "LAN" -IPAddress 10.0.0.10 -PrefixLength 24 
 
-Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses 10.0.0.10
+Set-DnsClientServerAddress -InterfaceAlias "LAN" -ServerAddresses 10.0.0.10
 ```
 
 > If DNS doesn't persist via PowerShell, set manually: SConfig → Networking → DNS → `10.0.0.10`
@@ -88,7 +88,7 @@ Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
 Promote to Domain Controller (new forest):
 
 ```powershell
-Install-ADDSForest -DomainName "office.lab" -InstallDns
+Install-ADDSForest -DomainName "inthelli.lab" -InstallDns
 ```
 
 Validate after reboot:
@@ -96,7 +96,7 @@ Validate after reboot:
 ```powershell
 Get-ADDomain
 Get-Service ntds
-nslookup office.lab
+nslookup inthelli.lab
 nslookup 10.0.0.10
 ```
 
@@ -111,7 +111,7 @@ After the initial configuration was completed, the temporary network interface w
 Configure the default route to use OPNsense:
 
 ```powershell
-New-NetRoute -DestinationPrefix "0.0.0.0/0" -InterfaceAlias "Ethernet" -NextHop 10.0.0.1
+New-NetRoute -DestinationPrefix "0.0.0.0/0" -InterfaceAlias "LAN" -NextHop 10.0.0.1
 ```
 
 Verify:
@@ -160,25 +160,25 @@ Install-WindowsFeature DHCP -IncludeManagementTools
 ### Create the DHCP Scope
 
 ```powershell
-Add-DhcpServerv4Scope -Name "office.lab" -StartRange 10.0.0.150 -EndRange 10.0.0.200 -SubnetMask 255.255.255.0
+Add-DhcpServerv4Scope -Name "inthelli.lab" -StartRange 10.0.0.150 -EndRange 10.0.0.200 -SubnetMask 255.255.255.0
 ```
 
 ### Configure Scope Options
 
 ```powershell
-Set-DhcpServerv4OptionValue -ScopeId 10.0.0.0 -Router 10.0.0.1 -DnsServer 10.0.0.10 -DnsDomain "office.lab"
+Set-DhcpServerv4OptionValue -ScopeId 10.0.0.10 -Router 10.0.0.1 -DnsServer 10.0.0.10 -DnsDomain "inthelli.lab"
 ```
 
 Verify:
 
 ```powershell
-Get-DhcpServerv4OptionValue -ScopeId 10.0.0.0
+Get-DhcpServerv4OptionValue -ScopeId 10.0.0.10
 ```
 
 ### Authorize DHCP in Active Directory
 
 ```powershell
-Add-DhcpServerInDC -DnsName "DC01.office.lab" -IPAddress 10.0.0.10
+Add-DhcpServerInDC -DnsName "DC01.inthelli.lab" -IPAddress 10.0.0.10
 ```
 
 Verify:
@@ -190,19 +190,19 @@ Get-DhcpServerInDC
 ### Configure DHCP Reservations
 
 ```powershell
-Add-DhcpServerv4Reservation -ScopeId 10.0.0.0 -IPAddress 10.0.0.101 -ClientId "00-0C-29-5F-C6-0C" -Name "PC01"
+Add-DhcpServerv4Reservation -ScopeId 10.0.0.10 -IPAddress 10.0.0.101 -ClientId "00-0C-29-5F-C6-0C" -Name "PC01"
 
-Add-DhcpServerv4Reservation -ScopeId 10.0.0.0 -IPAddress 10.0.0.102 -ClientId "00-0C-29-CE-26-93" -Name "PC02"
+Add-DhcpServerv4Reservation -ScopeId 10.0.0.10 -IPAddress 10.0.0.102 -ClientId "00-0C-29-CE-26-93" -Name "PC02"
 
-Add-DhcpServerv4Reservation -ScopeId 10.0.0.0 -IPAddress 10.0.0.103 -ClientId "00-0C-29-73-01-F6" -Name "PC03"
+Add-DhcpServerv4Reservation -ScopeId 10.0.0.10 -IPAddress 10.0.0.103 -ClientId "00-0C-29-73-01-F6" -Name "PC03"
 
-Add-DhcpServerv4Reservation -ScopeId 10.0.0.0 -IPAddress 10.0.0.104 -ClientId "00-0C-29-17-51-99" -Name "PC04"
+Add-DhcpServerv4Reservation -ScopeId 10.0.0.10 -IPAddress 10.0.0.104 -ClientId "00-0C-29-17-51-99" -Name "PC04"
 ```
 
 Verify:
 
 ```powershell
-Get-DhcpServerv4Reservation -ScopeId 10.0.0.0
+Get-DhcpServerv4Reservation -ScopeId 10.0.0.10
 ```
 
 ## Current Status
